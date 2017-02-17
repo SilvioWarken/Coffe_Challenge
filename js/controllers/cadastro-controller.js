@@ -7,12 +7,24 @@ angular.module('coffeChallenge').controller('CadastroController', function($scop
 	$scope.showTable = false;
 	$scope.printView= false;
 	$scope.gerado = false;
+	$scope.localServerOn = false;
+
+	$scope.activateServer = function(){
+		$scope.localServerOn = !$scope.localServerOn;
+		if(!localStorageService.isSupported && $scope.localServerOn) {
+			alert("Seu sistema não suporta Servidor Local");
+			$scope.localServer = false;
+		}			
+	}
 
 	$scope.cadastrar=function(){
 		if (!$scope.verificaDuplicata()){
 			$scope.cadastroNomes.push($scope.vo.cadastro); //{"nome":$scope.vo.cadastro,"count":"0"}
-			localStorageService.set('funcionarios', $scope.cadastroNomes);
 			$scope.vo.cadastro = " ";
+			if($scope.localServerOn){
+				localStorageService.set('funcionarios', $scope.cadastroNomes);
+			}
+			
 		}
 		else{
 			alert ("Nome duplicado, tentar outro nome");
@@ -89,8 +101,10 @@ angular.module('coffeChallenge').controller('CadastroController', function($scop
 				}
 				filtro = !filtro;
 			};
-			localStorageService.set('listaManha', $scope.listaManha);
-			localStorageService.set('listaTarde', $scope.listaTarde);
+			if($scope.localServerOn){
+				localStorageService.set('listaManha', $scope.listaManha);
+				localStorageService.set('listaTarde', $scope.listaTarde);
+			}
 			$scope.gerado = true;
 			$scope.showTable = true;
 		}

@@ -46,7 +46,7 @@
                         Existem mais de 10 funcionários, alguns ficarão de fora da rotação semanal.
                     </span>
                     <p> </p>
-                    <button  style= "width: 48% " ng-click = "atualizarBanco()"  class="btn btn-primary" > Fazer Backup de Funcionários </button>
+                    <button  style= "width: 48% " ng-click = "atualizarBanco()"  class="btn btn-primary" ng-disabled = "!localServerOn" > Fazer Backup de Funcionários </button>
                     <button  style= "width: 48% " ng-click = "gerarLista()"  class="btn btn-primary" > Gerar Lista Semanal </button>
                     <p> </p>
                 </div>
@@ -91,7 +91,7 @@
                 <p> </p>
             </div>
             <div align="center" ng-hide="printView">
-                <button  style= "width: 90% " ng-click = "restoreBackup()"  class="btn btn-primary" > Restaurar Backup do Servidor Local</button>
+                <button  style= "width: 90% " ng-click = "restoreBackup()"  class="btn btn-primary" ng-disabled = "!localServerOn"> Restaurar Backup do Servidor Local</button>
                 <p><strong>Aviso:</strong>  Caso ocorra a remoção de algum funcionário na lista, deve ser feito um backup manual da mesma. </p>
                 <p><strong>Aviso 2:</strong>  A lista semanal é atualizada automaticamente no servidor local. </p>
             </div>            
@@ -101,6 +101,26 @@
                     <p style="float: left; width: 1%"></p>
                     <button style="float: left; width: 5%"  class="btn btn-primary" ng-click="printVersion()"><i class="fa fa-print"></i> Voltar</button>
             </div>        
+        </div>
+
+        <div align = "center" ng-hide = "printView" style="width: 100%">
+            <table style = "border-collapse:collapse; width: 40%">
+                <thead>
+                    <tr>
+                        <th colspan="2">Servidor Local está : </th>
+                    </tr>
+                </thead>
+                <tbody align="center">
+                    <tr>
+                        <td>
+                            <button ng-click = "activateServer()"  class="btn btn-primary" ng-disabled = "localServerOn"> ON </button>
+                        </td>
+                        <td>
+                            <button ng-click = "activateServer()"  class="btn btn-primary" ng-disabled = "!localServerOn"> OFF </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
     </body>
