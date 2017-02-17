@@ -5,12 +5,14 @@
         <title>CoffeChallenge</title>
         <meta name="viewport" content="width=device-width">
         <script src="js/lib/angular.js"></script>
+        <script src="js/lib/angular-local-storage.js"></script>
         <script src="js/main.js"></script>
-        <script src="js/controllers/cadastro-controller.js"></script>    
+        <script src="js/controllers/cadastro-controller.js"></script>
     </head>
 
     <body ng-controller = "CadastroController"> 
-        <h1 style ="text-align:center" >Coffe Challenge</h1>
+
+        <h1 style ="text-align:center">Coffe Challenge</h1>
         <div align="center" ng-hide="printView">
             <div style="float:left;width: 35%">
                 <p> </p>
@@ -30,6 +32,7 @@
                             <th colspan="2">Funcionários</th>
                         </tr>
                     </thead> 
+
                     <tbody ng-repeat="pessoa in cadastroNomes track by $index" style="align-content: center">
                         <tr>
                             <td style="text-align: center; width: 75%"> {{pessoa}} </td>
@@ -43,7 +46,8 @@
                         Existem mais de 10 funcionários, alguns ficarão de fora da rotação semanal.
                     </span>
                     <p> </p>
-                    <button  style= "width: 96% " ng-click = "gerarLista()"  class="btn btn-primary" > Gerar Lista Semanal </button>
+                    <button  style= "width: 48% " ng-click = "atualizarBanco()"  class="btn btn-primary" > Fazer Backup de Funcionários </button>
+                    <button  style= "width: 48% " ng-click = "gerarLista()"  class="btn btn-primary" > Gerar Lista Semanal </button>
                     <p> </p>
                 </div>
             </div>
@@ -82,14 +86,19 @@
                     <p> </p>
                 </div>
                 <button class="btn btn-primary" ng-click="printVersion()" ng-hide= "printView" style="float: left; width: 25%><i class="fa fa-print"></i> Versão de Impressão </button>
-                <p style="float: left; width: 3%"></p>
+                <p style="float: left; width: 0.5%"></p>
                 <button class="btn btn-primary" ng-click="resetarLista()" ng-hide= "printView" style="float: left; width: 25%><i class="fa fa-print"></i> Resetar a Lista </button>
+                <p> </p>
             </div>
-            
+            <div align="center" ng-hide="printView">
+                <button  style= "width: 90% " ng-click = "restoreBackup()"  class="btn btn-primary" > Restaurar Backup do Servidor Local</button>
+                <p><strong>Aviso:</strong>  Caso ocorra a remoção de algum funcionário na lista, deve ser feito um backup manual da mesma. </p>
+                <p><strong>Aviso 2:</strong>  A lista semanal é atualizada automaticamente no servidor local. </p>
+            </div>            
             <div ng-show="printView">
                 <p> </p>
                     <button style="float: left; width: 5%" class="btn btn-primary" ng-click="printData()"><i class="fa fa-print"></i> Imprimir</button>
-                    <p style="float: left; width: 3%"></p>
+                    <p style="float: left; width: 1%"></p>
                     <button style="float: left; width: 5%"  class="btn btn-primary" ng-click="printVersion()"><i class="fa fa-print"></i> Voltar</button>
             </div>        
         </div>

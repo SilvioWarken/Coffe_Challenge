@@ -1,4 +1,4 @@
-angular.module('coffeChallenge').controller('CadastroController', function($scope){
+angular.module('coffeChallenge').controller('CadastroController', function($scope, localStorageService){
 	
 	$scope.cadastroNomes = [];
 	$scope.listaSemanal = [];
@@ -9,9 +9,9 @@ angular.module('coffeChallenge').controller('CadastroController', function($scop
 	$scope.gerado = false;
 
 	$scope.cadastrar=function(){
-
 		if (!$scope.verificaDuplicata()){
 			$scope.cadastroNomes.push($scope.vo.cadastro); //{"nome":$scope.vo.cadastro,"count":"0"}
+			localStorageService.set('funcionarios', $scope.cadastroNomes);
 			$scope.vo.cadastro = " ";
 		}
 		else{
@@ -35,7 +35,7 @@ angular.module('coffeChallenge').controller('CadastroController', function($scop
 
 	$scope.remover=function(nop){
 		var indiceNome = $scope.cadastroNomes.indexOf(nop);
-		$scope.cadastroNomes.splice(indiceNome, 1);
+		$scope.cadastroNomes.splice(indiceNome, 1);		
 		if($scope.gerado){
 			if($scope.cadastroNomes.length == 0){
 				$scope.showTable = false;
@@ -48,6 +48,10 @@ angular.module('coffeChallenge').controller('CadastroController', function($scop
 			}
 		} 
 	};
+
+	$scope.atualizarBanco=function(){
+		localStorageService.set('funcionarios', $scope.cadastroNomes);
+	}
 
 	function shuffle(array) {
   		var currentIndex = array.length, temporaryValue, randomIndex;
@@ -85,6 +89,8 @@ angular.module('coffeChallenge').controller('CadastroController', function($scop
 				}
 				filtro = !filtro;
 			};
+			localStorageService.set('listaManha', $scope.listaManha);
+			localStorageService.set('listaTarde', $scope.listaTarde);
 			$scope.gerado = true;
 			$scope.showTable = true;
 		}
@@ -108,6 +114,18 @@ angular.module('coffeChallenge').controller('CadastroController', function($scop
    		newWin.document.write(divToPrint.outerHTML);
    		newWin.print();
    		newWin.close();
+	}
+
+	$scope.restoreBackup= function()
+	{
+		if(localStorageService.get('funcionarios').length == 0){
+			alert("Impossivel fazer backup, não existe registro de funcionarios no backup.");
+		}
+		else {
+			$scope.cadastroNomes = localStorageService.get('funcionarios');
+			$scope.showTable = false;
+			$scope.gerado = false;
+		}
 	}
 
 	$scope.printVersion=function(){
