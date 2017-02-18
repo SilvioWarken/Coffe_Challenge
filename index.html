@@ -19,8 +19,8 @@
             </div>
             <div style="float: left; width: 30%">
                 <div class="form-group" >
-                    <form novalidate name="cadastro" class="row">
-                        <p><strong>Insira um nome único com no mínimo 3 carateres.</strong></p>    
+                    <form novalidate name="cadastro">
+                        <p><strong>Insira um nome único com no mínimo 3 caracteres.</strong></p>    
                         <input  ng-model = "vo.cadastro" class="form-control" required ng-minlength="3" style="width: 40%">
                         <button  ng-click = "cadastrar()"  class="btn btn-primary" ng-disabled="cadastro.$invalid" style="width: 45%"> Cadastrar Novo Funcionário </button>                
                     </form>
@@ -92,7 +92,7 @@
             </div>
             <div align="center" ng-hide="printView">
                 <button  style= "width: 90% " ng-click = "restoreBackup()"  class="btn btn-primary" ng-disabled = "!localServerOn"> Restaurar Backup do Servidor Local</button>
-                <p><strong>Aviso:</strong>  Caso ocorra a remoção de algum funcionário na lista, deve ser feito um backup manual da mesma. </p>
+                <p><strong>Aviso:</strong>  Caso ocorra a remoção de algum funcionário da lista, deve ser feito um backup manual da mesma. </p>
                 <p><strong>Aviso 2:</strong>  A lista semanal é atualizada automaticamente no servidor local. </p>
             </div>            
             <div ng-show="printView">
